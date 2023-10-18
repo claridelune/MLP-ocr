@@ -1,5 +1,6 @@
 #include <vector>
 #include <cmath>
+#include <iostream>
 
 class Neuron;
 
@@ -10,14 +11,17 @@ class Neuron
     public:
         Neuron(int numNextNeurons, int index);
         void feedForward(const Layer &prevLayer);
-        void setValue(int x);
-        int getValue() const;
-        void setError(int x);
-        int getError() const;
+        void calcHiddenErrors(const Layer &nextLayer);
+        void updateHiddenWeights(Layer &prevLayer);
+        void setValue(double x);
+        double getValue() const;
+        void setError(double x);
+        double getError() const;
         double dSigmoid();
         std::vector<double> weights;
     private:
         double sigmoid(double x);
+        static double randomWeight(void) { return static_cast<double>(rand()) / static_cast<double>(RAND_MAX) * 2.0 - 1.0; }
         double value;
         double error;
         int index;
