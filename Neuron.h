@@ -12,7 +12,7 @@ class Neuron
         Neuron(int numNextNeurons, int index);
         void feedForward(const Layer &prevLayer);
         void calcHiddenErrors(const Layer &nextLayer);
-        void updateHiddenWeights(Layer &prevLayer);
+        void calcWeights(Layer &prevLayer, double n);
         void setValue(double x);
         double getValue() const;
         void setError(double x);

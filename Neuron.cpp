@@ -25,18 +25,21 @@ void Neuron::calcHiddenErrors(const Layer &nextLayer)
 {
     // sum
     double sum = 0.0;
-    for (int i = 0; i < nextLayer.size() ; i++) {
+    for (int i = 0; i < nextLayer.size() - 1; i++) {
         sum += weights[i] * nextLayer[i].getError();
     }
     error = sum * dSigmoid();
 }
 
-void Neuron::updateHiddenWeights(Layer &prevLayer)
+void Neuron::calcWeights(Layer &prevLayer, double n)
 {
-    for (int n = 0; n < prevLayer.size(); ++n) {
-        Neuron &neuron = prevLayer[n];
+    for (int i = 0; i < prevLayer.size(); ++i) {
+        Neuron &neuron = prevLayer[i];
         double oldWeight = neuron.weights[index];
 
+        // std::cout << "value: " << neuron.getValue() << std::endl;
+        // std::cout << "n: " << n << std::endl;
+        // std::cout << "error: " << error << std::endl;
         neuron.weights[index] = oldWeight + neuron.getValue()*n*error;
     }
 }

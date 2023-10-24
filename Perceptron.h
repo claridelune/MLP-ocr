@@ -11,6 +11,6 @@ class Perceptron
         void backPropagation(std::vector<double> target);
         void getOutput(std::vector<double> &result) const;
     private:
-        const double n = 0.5;
+        static constexpr double n = 0.5;
         std::vector<Layer> layers; // Layers[layerNum][NeuronNum]
 };

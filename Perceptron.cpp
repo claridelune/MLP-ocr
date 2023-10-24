@@ -2,6 +2,14 @@
 
 Perceptron::Perceptron(const std::vector<int> setup)
 {   
+    // la primera "capa" que solo es de input
+    layers.emplace_back();
+    int numNextNeurons = setup[0];  // Asumiendo que setup[0] es el número de neuronas de entrada
+    for (unsigned neuronnum = 0; neuronnum <= numNextNeurons; ++neuronnum) {
+        layers.back().emplace_back(numNextNeurons, neuronnum);
+    }
+
+    // empezar las capas normales
     for (auto it = setup.begin(); it != setup.end(); ++it) {
         layers.emplace_back();
 
@@ -38,10 +46,8 @@ void Perceptron::backPropagation(std::vector<double> target)
     for (int i = 0; i < outputLayer.size() - 1; ++i) {
         double error = (target[i] - outputLayer[i].getValue()) * outputLayer[i].dSigmoid();
         outputLayer[i].setError(error);
-
-        for (auto &w : outputLayer[i].weights) {
-            w = w + n * outputLayer[i].getValue()*outputLayer[i].getError();
-        }
+        // output weights
+        outputLayer[i].calcWeights(layers[layers.size()-2], Perceptron::n);
     }
 
     // hidden error
@@ -55,12 +61,12 @@ void Perceptron::backPropagation(std::vector<double> target)
     }
 
     //hidden weights
-    for (int layerNum = layers.size() - 1; layerNum > 0; --layerNum) {
+    for (int layerNum = layers.size() - 2; layerNum > 0; --layerNum) {
         Layer &layer = layers[layerNum];
         Layer &prevLayer = layers[layerNum - 1];
 
         for (unsigned n = 0; n < layer.size() - 1; ++n) {
-            layer[n].updateHiddenWeights(prevLayer);
+            layer[n].calcWeights(prevLayer, Perceptron::n);
         }
     }
 }
