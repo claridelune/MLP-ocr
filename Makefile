@@ -11,7 +11,7 @@ CXXFLAGS = -std=c++11 -Wall
 LIBS = -lGL -lGLU -lglut
 
 # Archivos fuente
-SRCS = main.cpp DataVisualizer.cpp Neuron.cpp Perceptron.cpp
+SRCS = minecraft.cpp DataVisualizer.cpp Neuron.cpp Perceptron.cpp
 OBJS = $(SRCS:.cpp=.o)
 
 all: $(TARGET)

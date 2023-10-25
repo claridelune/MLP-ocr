@@ -26,9 +26,6 @@ int main(){
         ocr.getOutput(resultVals);
 
         int predict = vectorToNumber(resultVals);
-        /* for (auto i: resultVals){
-            std::cout << i << " ";
-        } */
         std::cout << "Predicted number: " << predict << std::endl;
         predictions.push_back(predict);
 
