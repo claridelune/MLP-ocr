@@ -1,5 +1,6 @@
 #include "Perceptron.h"
 #include "utils.h"
+#include "DataVisualizer.h"
 #include <vector>
 
 int main(){
@@ -18,6 +19,7 @@ int main(){
     }
 
     // Probar
+    std::vector<int> predictions;
     for (size_t i = 0; i < testData.size(); i++) {
         ocr.feedForward(testData[i]);
         std::vector<double> resultVals;
@@ -28,7 +30,11 @@ int main(){
             std::cout << i << " ";
         } */
         std::cout << "Predicted number: " << predict << std::endl;
+        predictions.push_back(predict);
 
     }
+
+    DataVisualizer visualizer(trainingData, testData, predictions);
+    visualizer.run();
     return 0;
 }
